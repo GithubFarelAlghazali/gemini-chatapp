@@ -44,13 +44,13 @@ const handleAsk = async () => {
 
 <template>
   <header
-    class="bg-white border border-slate-400 m-4 p-4 rounded-lg text-center font-bold md:w-[50vw] mx-auto"
+    class="bg-white border border-slate-400 m-4 p-4 rounded-lg text-center font-bold w-[90vw] md:w-[70vw] mx-auto"
   >
     <h2>Vue + Groq</h2>
   </header>
   <main
     ref="chatContainer"
-    class="bg-gray-200 rounded-lg m-4 p-4 h-[70vh] relative overflow-y-auto md:w-[50vw] mx-auto"
+    class="bg-gray-200 rounded-lg m-4 p-4 h-[70vh] relative overflow-y-auto w-[90vw] md:w-[70vw] mx-auto"
   >
     <h1
       v-if="userChats.length < 1"
@@ -67,7 +67,12 @@ const handleAsk = async () => {
       class="fixed left-4 right-4 bottom-10 rounded-md overflow-hidden border border-slate-500 md:left-[25vw] md:right-[25vw]"
     >
       <input type="text" class="w-[85%] focus:outline-none p-2" v-model="input" />
-      <button class="w-[15%] bg-green-500 p-2 hover:bg-green-600" @click="handleAsk">Ask</button>
+      <button
+        class="w-[15%] md:w-[12%] rounded-sm bg-green-500 p-2 hover:bg-green-600 border border-slate-500 md:m-2"
+        @click="handleAsk"
+      >
+        Ask
+      </button>
     </div>
   </main>
 </template>
