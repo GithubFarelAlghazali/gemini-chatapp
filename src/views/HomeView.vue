@@ -57,7 +57,7 @@ const handleAsk = async () => {
       class="absolute top-[50%] w-full text-center text-2xl font-bold"
     >
       ^^<br />
-      Chat with Groq
+      Ask Groq anymore
     </h1>
     <div v-for="(msg, index) in userChats" :key="index">
       <UserChat>{{ msg }}</UserChat>
