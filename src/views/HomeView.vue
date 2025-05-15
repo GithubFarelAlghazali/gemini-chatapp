@@ -2,12 +2,13 @@
 import UserChat from '../components/UserChat.vue'
 import BotChat from '../components/BotChat.vue'
 import { requestGroqChat } from '@/services/groq'
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 
 const input = ref('')
 const messages = ref([])
 const userChats = ref([])
 const botChats = ref([])
+const chatContainer = ref(null)
 
 const handleAsk = async () => {
   // show bubble chat
@@ -31,6 +32,13 @@ const handleAsk = async () => {
     botChats.value.push(errMsg)
     console.error('Groq request error:', error)
   }
+
+  // scroll to bottom
+  nextTick(() => {
+    if (chatContainer.value) {
+      chatContainer.value.scrollTop = chatContainer.value.scrollHeight
+    }
+  })
 }
 </script>
 
@@ -41,7 +49,8 @@ const handleAsk = async () => {
     <h2>Vue + Groq</h2>
   </header>
   <main
-    class="bg-gray-200 rounded-lg m-4 p-4 h-[80vh] relative overflow-y-auto md:w-[50vw] mx-auto"
+    ref="chatContainer"
+    class="bg-gray-200 rounded-lg m-4 p-4 h-[70vh] relative overflow-y-auto md:w-[50vw] mx-auto"
   >
     <h1
       v-if="userChats.length < 1"

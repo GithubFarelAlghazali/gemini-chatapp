@@ -1,9 +1,33 @@
-<script setup></script>
+<script setup>
+import { marked } from 'marked'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/github.css' // Gaya highlight
+import { computed, useSlots } from 'vue'
+
+// Ambil isi dari slot sebagai teks
+const slots = useSlots()
+const rawText = computed(() => slots.default?.()[0]?.children || '')
+
+// Konfigurasi marked + highlight.js
+marked.setOptions({
+  highlight: function (code, lang) {
+    if (hljs.getLanguage(lang)) {
+      return hljs.highlight(code, { language: lang }).value
+    }
+    return hljs.highlightAuto(code).value
+  },
+  langPrefix: 'hljs language-', // class prefix untuk highlight.js
+})
+
+// Convert markdown to HTML
+const htmlContent = computed(() => marked(rawText.value))
+</script>
 
 <template>
   <div class="w-full flex justify-start h-fit mb-2">
-    <p class="mr-2 w-fit bg-gray-100 p-5 rounded-r-xl rounded-tl-xl border border-slate-500">
-      <slot />
-    </p>
+    <div
+      class="mr-2 w-fit bg-gray-100 p-5 rounded-r-xl rounded-tl-xl border border-slate-500"
+      v-html="htmlContent"
+    ></div>
   </div>
 </template>
