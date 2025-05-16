@@ -1,7 +1,6 @@
 <script setup>
 import UserChat from '../components/UserChat.vue'
 import BotChat from '../components/BotChat.vue'
-import { requestGroqChat } from '@/services/groq'
 import { requestGemini } from '@/services/gemini'
 import { ref, nextTick } from 'vue'
 
