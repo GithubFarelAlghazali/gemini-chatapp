@@ -3,8 +3,10 @@ import UserChat from '../components/UserChat.vue'
 import BotChat from '../components/BotChat.vue'
 import { requestGemini } from '@/services/gemini'
 import { ref, nextTick } from 'vue'
+import IconLoad from '../components/icons/IconLoad.vue'
 
 const input = ref('')
+const isLoading = ref(false)
 // const messages = ref([])
 // const messages = ref('')
 const userChats = ref([])
@@ -22,6 +24,7 @@ const handleAsk = async () => {
   // })
   userChats.value.push(input.value) // Simpan ke daftar chat
   input.value = '' // Reset input
+  isLoading.value = true
 
   // request groq chat
   // try {
@@ -43,6 +46,7 @@ const handleAsk = async () => {
     botChats.value.push(errMsg)
     console.error('Gemini request error:', error)
   }
+  isLoading.value = false
 
   // scroll to bottom
   nextTick(() => {
@@ -70,7 +74,7 @@ const handleAsk = async () => {
       ^^<br />
       Can i help you today?
     </h1>
-    <div class="md:pb-20">
+    <div class="md:pb-20 w-full">
       <div v-for="(msg, index) in userChats" :key="index">
         <UserChat>{{ msg }}</UserChat>
         <BotChat v-if="botChats[index]">{{ botChats[index] }}</BotChat>
@@ -81,10 +85,19 @@ const handleAsk = async () => {
     >
       <input type="text" class="w-[85%] focus:outline-none p-2" v-model="input" />
       <button
+        v-if="!isLoading"
         class="w-[15%] md:w-[12%] rounded-sm bg-green-500 p-2 hover:bg-green-600 border border-slate-500 md:m-2"
         @click="handleAsk"
       >
         Ask
+      </button>
+      <button
+        v-if="isLoading"
+        class="w-[15%] md:w-[12%] rounded-sm bg-green-500 p-2 hover:bg-green-600 border border-slate-500 md:m-2"
+        @click="handleAsk"
+        disabled
+      >
+        <IconLoad class="animate-spin mx-auto" />
       </button>
     </div>
   </main>
