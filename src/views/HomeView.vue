@@ -58,7 +58,7 @@ const handleAsk = async () => {
   <header
     class="bg-white border border-slate-400 m-4 p-4 rounded-lg text-center font-bold w-[90vw] md:w-[70vw] mx-auto"
   >
-    <h2>Vue + Groq</h2>
+    <h2>Vue + Gemini</h2>
   </header>
   <main
     ref="chatContainer"
