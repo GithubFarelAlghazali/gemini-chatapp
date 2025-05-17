@@ -1,6 +1,7 @@
 <script setup>
 import UserChat from '../components/UserChat.vue'
 import BotChat from '../components/BotChat.vue'
+import ThemeTogle from '../components/ThemeTogle.vue'
 import { requestGemini } from '@/services/gemini'
 import { ref, nextTick } from 'vue'
 import IconLoad from '../components/icons/IconLoad.vue'
@@ -42,7 +43,7 @@ const handleAsk = async () => {
     const botReply = await requestGemini(userChat)
     botChats.value.push(botReply)
   } catch (error) {
-    const errMsg = 'Error while processing request, please check your connection'
+    const errMsg = 'Error while processing request'
     botChats.value.push(errMsg)
     console.error('Gemini request error:', error)
   }
@@ -59,13 +60,14 @@ const handleAsk = async () => {
 
 <template>
   <header
-    class="bg-white border border-slate-400 m-4 p-4 rounded-lg text-center font-bold w-[90vw] md:w-[70vw] mx-auto"
+    class="bg-white dark:bg-gray-900 border relative border-slate-400 m-4 p-4 rounded-lg text-center font-bold w-[90vw] md:w-[70vw] mx-auto"
   >
+    <ThemeTogle />
     <h2>Vue + Gemini</h2>
   </header>
   <main
     ref="chatContainer"
-    class="bg-gray-200 rounded-lg m-4 p-4 h-[80vh] relative overflow-y-auto w-[90vw] md:w-[70vw] mx-auto"
+    class="bg-gray-200 dark:bg-gray-800 rounded-lg m-4 p-4 h-[80vh] relative overflow-y-auto w-[90vw] md:w-[70vw] mx-auto"
   >
     <h1
       v-if="userChats.length < 1"
@@ -81,12 +83,12 @@ const handleAsk = async () => {
       </div>
     </div>
     <div
-      class="fixed left-4 right-4 bottom-10 rounded-md overflow-hidden border bg-white border-slate-500 md:left-[25vw] md:right-[25vw]"
+      class="fixed left-4 right-4 bottom-10 rounded-md overflow-hidden border dark:bg-gray-900 bg-white border-slate-500 md:left-[25vw] md:right-[25vw]"
     >
-      <input type="text" class="w-[85%] focus:outline-none p-2" v-model="input" />
+      <input type="text" class="w-[85%] focus:outline-none p-2 dark:bg-gray-900" v-model="input" />
       <button
         v-if="!isLoading"
-        class="w-[15%] md:w-[12%] rounded-sm bg-green-500 p-2 hover:bg-green-600 border border-slate-500 md:m-2"
+        class="w-[15%] md:w-[12%] rounded-sm bg-green-500 p-2 hover:bg-green-600 border dark:bg-green-800 border-slate-500 md:m-2"
         @click="handleAsk"
       >
         Ask
@@ -94,10 +96,9 @@ const handleAsk = async () => {
       <button
         v-if="isLoading"
         class="w-[15%] md:w-[12%] rounded-sm bg-green-500 p-2 hover:bg-green-600 border border-slate-500 md:m-2"
-        @click="handleAsk"
         disabled
       >
-        <IconLoad class="animate-spin mx-auto" />
+        <IconLoad class="animate-spin mx-auto cursor-not-allowed" />
       </button>
     </div>
   </main>

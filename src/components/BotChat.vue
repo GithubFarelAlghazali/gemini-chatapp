@@ -38,14 +38,23 @@ const copy = () => {
 <template>
   <div class="w-full flex justify-start h-fit mb-2 flex-col gap-2">
     <div
-      class="mr-2 w-fit bg-gray-100 p-5 rounded-r-xl rounded-tl-xl border border-slate-500"
+      class="mr-2 w-fit dark:bg-gray-900 bg-gray-100 p-5 rounded-r-xl rounded-tl-xl border border-slate-500 overflow-x-hidden whitespace-normal max-w-full"
       v-html="htmlContent"
     ></div>
-    <button @click="copy" class="" v-if="!isCopy">
-      <IconCopy />
-    </button>
-    <button @click="copy" class="" v-if="isCopy" disabled>
-      <IconCheck />
+    <button @click="copy" class="flex justify-start" v-if="!isCopy"><IconCopy /> Copy</button>
+    <button @click="copy" class="flex justify-start" v-if="isCopy" disabled>
+      <IconCheck /> Copied
     </button>
   </div>
 </template>
+
+<style scope>
+pre {
+  background: rgb(29, 29, 29);
+  color: white;
+  overflow: auto;
+  padding: 8px;
+  border-radius: 6px;
+  border: gray solid 1px;
+}
+</style>
