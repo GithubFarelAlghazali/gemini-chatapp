@@ -3,11 +3,17 @@ import UserChat from '../components/UserChat.vue'
 import BotChat from '../components/BotChat.vue'
 import ThemeTogle from '../components/ThemeTogle.vue'
 import { requestGemini } from '@/services/gemini'
-import { ref, nextTick } from 'vue'
+import { greetingTime } from '@/services/greeting'
+import { ref, nextTick, onMounted } from 'vue'
 import IconLoad from '../components/icons/IconLoad.vue'
 
 const input = ref('')
 const isLoading = ref(false)
+const greeting = ref('')
+onMounted(() => {
+  greeting.value = greetingTime()
+})
+
 // const messages = ref([])
 // const messages = ref('')
 const userChats = ref([])
@@ -67,35 +73,39 @@ const handleAsk = async () => {
   </header>
   <main
     ref="chatContainer"
-    class="bg-gray-200 dark:bg-gray-800 rounded-lg m-4 p-4 h-[80vh] relative overflow-y-auto w-[90vw] md:w-[70vw] mx-auto"
+    class="bg-gray-200 dark:bg-gray-800 rounded-lg m-4 p-4 h-[80vh] relative overflow-x-hidden overflow-y-auto w-[90vw] md:w-[70vw] mx-auto"
   >
     <h1
       v-if="userChats.length < 1"
-      class="absolute top-[50%] w-full text-center text-2xl font-bold"
+      class="absolute top-[50%] w-full text-center text-4xl font-semibold"
     >
       ^^<br />
-      Can i help you today?
+      {{ greeting }}
     </h1>
-    <div class="md:pb-20 w-full">
+    <div class="pb-16 md:pb-20 w-full">
       <div v-for="(msg, index) in userChats" :key="index">
         <UserChat>{{ msg }}</UserChat>
         <BotChat v-if="botChats[index]">{{ botChats[index] }}</BotChat>
       </div>
     </div>
     <div
-      class="fixed left-4 right-4 bottom-10 rounded-md overflow-hidden border dark:bg-gray-900 bg-white border-slate-500 md:left-[25vw] md:right-[25vw]"
+      class="fixed left-4 right-4 bottom-10 rounded-md overflow-hidden border dark:bg-gray-900 bg-white border-slate-500 md:left-[25vw] md:right-[25vw] flex justify-evenly"
     >
-      <input type="text" class="w-[85%] focus:outline-none p-2 dark:bg-gray-900" v-model="input" />
+      <textarea
+        type="text"
+        class="w-[80%] focus:outline-none resize-none p-2 dark:bg-gray-900"
+        v-model="input"
+      ></textarea>
       <button
         v-if="!isLoading"
-        class="w-[15%] md:w-[12%] rounded-sm bg-green-500 p-2 hover:bg-green-600 border dark:bg-green-800 border-slate-500 md:m-2"
+        class="w-[15%] md:w-[17%] rounded-md bg-green-500 p-2 hover:bg-green-600 border dark:bg-green-800 border-slate-500 m-2"
         @click="handleAsk"
       >
         Ask
       </button>
       <button
         v-if="isLoading"
-        class="w-[15%] md:w-[12%] rounded-sm bg-green-500 p-2 hover:bg-green-600 border border-slate-500 md:m-2"
+        class="w-[15%] md:w-[12%] rounded-md bg-green-500 p-2 hover:bg-green-600 border border-slate-500 md:m-2"
         disabled
       >
         <IconLoad class="animate-spin mx-auto cursor-not-allowed" />

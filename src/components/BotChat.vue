@@ -33,12 +33,14 @@ const copy = () => {
     isCopy.value = false
   }, 1000)
 }
+
+// copy code from chat
 </script>
 
 <template>
   <div class="w-full flex justify-start h-fit mb-2 flex-col gap-2">
     <div
-      class="mr-2 w-fit dark:bg-gray-900 bg-gray-100 p-5 rounded-r-xl rounded-tl-xl border border-slate-500 overflow-x-hidden whitespace-normal max-w-full"
+      class="mr-2 w-fit dark:bg-gray-900 bg-gray-100 p-4 rounded-r-xl rounded-tl-xl border border-slate-500 overflow-x-hidden whitespace-normal max-w-full"
       v-html="htmlContent"
     ></div>
     <button @click="copy" class="flex justify-start" v-if="!isCopy"><IconCopy /> Copy</button>
@@ -56,5 +58,6 @@ pre {
   padding: 8px;
   border-radius: 6px;
   border: gray solid 1px;
+  margin: 2em 0px;
 }
 </style>
