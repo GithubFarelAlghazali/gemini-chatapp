@@ -6,12 +6,12 @@ import { computed, useSlots, ref } from 'vue'
 import IconCopy from './icons/IconCopy.vue'
 import IconCheck from './icons/IconCheck.vue'
 
-// Ambil isi dari slot sebagai teks
+// get slot content
 const slots = useSlots()
 const rawText = computed(() => slots.default?.()[0]?.children || '')
 const isCopy = ref(false)
 
-// Konfigurasi marked + highlight.js
+// setup marked + highlight.js
 marked.setOptions({
   highlight: function (code, lang) {
     if (hljs.getLanguage(lang)) {
@@ -19,11 +19,27 @@ marked.setOptions({
     }
     return hljs.highlightAuto(code).value
   },
-  langPrefix: 'hljs language-', // class prefix untuk highlight.js
+  langPrefix: 'hljs language-', // class prefix for highlight.js
 })
 
 // Convert markdown to HTML
-const htmlContent = computed(() => marked(rawText.value))
+const htmlContent = ref('')
+let output = ''
+const outputArr = rawText.value.split('')
+const isDone = ref(false)
+
+outputArr.forEach((out, index) => {
+  setTimeout(() => {
+    output += out
+    htmlContent.value = computed(() => marked(output))
+    console.log(output)
+    console.log(htmlContent.value)
+    // appear copybutton when process end
+    if (output.split('').length == outputArr.length) {
+      isDone.value = true
+    }
+  }, index * 25)
+})
 
 // copy bot-chat
 const copy = () => {
@@ -33,18 +49,18 @@ const copy = () => {
     isCopy.value = false
   }, 1000)
 }
-
-// copy code from chat
 </script>
 
 <template>
   <div class="w-full flex justify-start h-fit mb-2 flex-col gap-2">
     <div
       class="mr-2 w-fit dark:bg-gray-900 bg-gray-100 p-4 rounded-r-xl rounded-tl-xl border border-slate-500 overflow-x-hidden whitespace-normal max-w-full"
-      v-html="htmlContent"
+      v-html="htmlContent.value"
     ></div>
-    <button @click="copy" class="flex justify-start" v-if="!isCopy"><IconCopy /> Copy</button>
-    <button @click="copy" class="flex justify-start" v-if="isCopy" disabled>
+    <button @click="copy" class="flex justify-start" v-if="!isCopy && isDone">
+      <IconCopy /> Copy
+    </button>
+    <button @click="copy" class="flex justify-start" v-if="isCopy && isDone" disabled>
       <IconCheck /> Copied
     </button>
   </div>
@@ -59,5 +75,16 @@ pre {
   border-radius: 6px;
   border: gray solid 1px;
   margin: 2em 0px;
+}
+code {
+  font-family: monospace;
+  margin: 2px;
+  font-size: 1.2em;
+}
+
+ol,
+ul {
+  margin-top: 5px;
+  margin-bottom: 1em;
 }
 </style>

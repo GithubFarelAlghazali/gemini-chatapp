@@ -7,7 +7,7 @@ export const greetingTime = () => {
   } else if (hour > 12 && hour < 16) {
     return 'Hi, need a help?'
   } else if (hour > 16 && hour < 24) {
-    return "Don't forget drink water🥤, okay?"
+    return "Don't forget to drink water🥤, okay?"
   } else {
     return "This is rest time, isn't?"
   }

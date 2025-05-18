@@ -14,8 +14,6 @@ onMounted(() => {
   greeting.value = greetingTime()
 })
 
-// const messages = ref([])
-// const messages = ref('')
 const userChats = ref([])
 const botChats = ref([])
 const chatContainer = ref(null)
@@ -25,24 +23,10 @@ const handleAsk = async () => {
   if (input.value.trim() === '') return
 
   const userChat = input.value.trim()
-  // messages.value.push({
-  //   role: 'user',
-  //   content: userChat,
-  // })
-  userChats.value.push(input.value) // Simpan ke daftar chat
-  input.value = '' // Reset input
-  isLoading.value = true
 
-  // request groq chat
-  // try {
-  //   const botReply = await requestGroqChat(messages.value)
-  //   botChats.value.push(botReply)
-  //   messages.value.push({ role: 'assistant', content: botReply })
-  // } catch (error) {
-  //   const errMsg = 'Error while processing request, please check your connection'
-  //   botChats.value.push(errMsg)
-  //   console.error('Groq request error:', error)
-  // }
+  userChats.value.push(input.value)
+  input.value = ''
+  isLoading.value = true
 
   // request to gemini
   try {
@@ -77,12 +61,12 @@ const handleAsk = async () => {
   >
     <h1
       v-if="userChats.length < 1"
-      class="absolute top-[50%] w-full text-center text-4xl font-semibold"
+      class="absolute top-0 bottom-0 right-0 left-0 pt-32 text-center text-xl md:text-4xl font-semibold"
     >
       ^^<br />
       {{ greeting }}
     </h1>
-    <div class="pb-16 md:pb-20 w-full">
+    <div class="pb-24 md:pb-26 w-full">
       <div v-for="(msg, index) in userChats" :key="index">
         <UserChat>{{ msg }}</UserChat>
         <BotChat v-if="botChats[index]">{{ botChats[index] }}</BotChat>
@@ -93,7 +77,7 @@ const handleAsk = async () => {
     >
       <textarea
         type="text"
-        class="w-[80%] focus:outline-none resize-none p-2 dark:bg-gray-900"
+        class="w-[80%] focus:outline-none resize-none p-3 dark:bg-gray-900"
         v-model="input"
       ></textarea>
       <button
@@ -105,7 +89,7 @@ const handleAsk = async () => {
       </button>
       <button
         v-if="isLoading"
-        class="w-[15%] md:w-[12%] rounded-md bg-green-500 p-2 hover:bg-green-600 border border-slate-500 md:m-2"
+        class="w-[15%] md:w-[17%] rounded-md bg-green-500 p-2 hover:bg-green-600 border dark:bg-green-800 border-slate-500 m-2"
         disabled
       >
         <IconLoad class="animate-spin mx-auto cursor-not-allowed" />
