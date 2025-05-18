@@ -38,7 +38,7 @@ outputArr.forEach((out, index) => {
     if (output.split('').length == outputArr.length) {
       isDone.value = true
     }
-  }, index * 25)
+  }, index * 1)
 })
 
 // copy bot-chat
