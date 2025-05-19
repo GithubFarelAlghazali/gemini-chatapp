@@ -26,6 +26,7 @@ const handleAsk = async () => {
 
   userChats.value.push(input.value)
   input.value = ''
+  await scrollToBottom()
   isLoading.value = true
 
   // request to gemini
@@ -38,13 +39,17 @@ const handleAsk = async () => {
     console.error('Gemini request error:', error)
   }
   isLoading.value = false
+}
 
-  // scroll to bottom
-  nextTick(() => {
-    if (chatContainer.value) {
-      chatContainer.value.scrollTop = chatContainer.value.scrollHeight
-    }
-  })
+// scroll to bottom
+const scrollToBottom = async () => {
+  await nextTick()
+  if (chatContainer.value) {
+    chatContainer.value.scrollTo({
+      top: chatContainer.value.scrollHeight,
+      behavior: 'smooth',
+    })
+  }
 }
 </script>
 
@@ -69,7 +74,7 @@ const handleAsk = async () => {
     <div class="pb-24 md:pb-26 w-full">
       <div v-for="(msg, index) in userChats" :key="index">
         <UserChat>{{ msg }}</UserChat>
-        <BotChat v-if="botChats[index]">{{ botChats[index] }}</BotChat>
+        <BotChat v-if="botChats[index]" @doneTyping="scrollToBottom">{{ botChats[index] }}</BotChat>
       </div>
     </div>
     <div

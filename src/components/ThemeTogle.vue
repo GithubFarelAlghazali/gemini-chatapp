@@ -5,7 +5,7 @@ import { ref } from 'vue'
 
 // Atur default tema jika belum ada
 if (!localStorage.getItem('theme')) {
-  localStorage.setItem('theme', 'dark')
+  localStorage.setItem('theme', 'light')
 }
 
 // Ambil tema dari localStorage
