@@ -36,7 +36,7 @@ onMounted(() => {
         isDone.value = true
         emit('doneTyping') //  Emit to parent when finished
       }
-    }, index * 8)
+    }, index * 5)
   })
 })
 
@@ -83,7 +83,10 @@ code {
 
 ol,
 ul {
-  margin-top: 5px;
-  margin-bottom: 1em;
+  list-style: disc;
+  margin: 1em;
+}
+ol {
+  list-style: decimal;
 }
 </style>
