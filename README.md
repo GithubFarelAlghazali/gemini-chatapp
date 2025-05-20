@@ -1,35 +1,37 @@
-# vue-groq-chatapp
+# Project overview
 
-This template should help get you started developing with Vue 3 in Vite.
+This project is a simple chatbot application with Google Gemini. You can try this project by forking this repo to your own GitHub repo, if you are starting to try AI in your application or you are trying to learn about using APIs.
 
-## Recommended IDE Setup
+### 🚀 Try demo
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+[chatogemini.vercel.app](https://chatogemini.vercel.app/)
 
-## Customize configuration
+### ⚙️ Project Setup
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- Get API key for Google Gemini in [ai.google.dev](https://ai.google.dev/)
+- Clone this repo to your computer with `git clone`
+- Install all dependencies
+  ```
+  npm install
+  ```
+- Create `.env` file in root directory, and place your API key inside
 
-## Project Setup
+  ```
 
-```sh
-npm install
-```
+  VITE_GEMINI = YOUR_API_KEY
 
-### Compile and Hot-Reload for Development
+  ```
 
-```sh
-npm run dev
-```
+- Run the project
 
-### Compile and Minify for Production
+  ```
+  npm run dev
+  # or adjust with your runtime
 
-```sh
-npm run build
-```
+  ```
 
-### Lint with [ESLint](https://eslint.org/)
+### 🏗️ Build with
 
-```sh
-npm run lint
-```
+- Vuejs
+- Tailwindcss
+- Google Gemini API
