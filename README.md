@@ -2,11 +2,11 @@
 
 This project is a simple chatbot application with Google Gemini. You can try this project by forking this repo to your own GitHub repo, if you are starting to try AI in your application or you are trying to learn about using APIs.
 
-### 🚀 Try demo
+## 🚀 Try demo
 
 [chatogemini.vercel.app](https://chatogemini.vercel.app/)
 
-### ⚙️ Project Setup
+## ⚙️ Project Setup
 
 - Get API key for Google Gemini in [ai.google.dev](https://ai.google.dev/)
 - Clone this repo to your computer with `git clone`
@@ -30,7 +30,7 @@ This project is a simple chatbot application with Google Gemini. You can try thi
 
   ```
 
-### 🏗️ Build with
+## 🏗️ Build with
 
 - Vuejs
 - Tailwindcss
